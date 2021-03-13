@@ -62,7 +62,7 @@ echo "Select"
 echo "1 = Clear"
 echo "2 = Clean Build M31+M21"
 echo "3 = Dirty Build M31+M21"
-echo "4 = Kernel+zip M31+M21+A51"
+echo "4 = AIK ALL"
 echo "5 = AIK+ZIP"
 echo "6 = Anykernel"
 echo "7 = Exit"
@@ -84,6 +84,9 @@ rm ./PRISH/ZIP/PRISH/M30S/boot.img
 rm ./PRISH/AK/1.zip
 rm -rf M31
 rm -rf M21
+rm -rf A51
+rm -rf M30S
+rm -rf A50
 fi
 
 if [ $n -eq 2 ]; then
@@ -103,6 +106,9 @@ rm ./PRISH/ZIP/PRISH/M30S/boot.img
 rm ./PRISH/AK/*.zip
 rm -rf M31
 rm -rf M21
+rm -rf A51
+rm -rf M30S
+rm -rf A50
 clear
 ############################################
 # If other device make change here
@@ -110,7 +116,7 @@ clear
 echo "==============="
 echo "Building Clean"
 echo "==============="
-make exynos9610-m31dd_defconfig O=M31
+make M31_defconfig O=M31
 make -j$(nproc --all) O=M31
 echo ""
 echo "Kernel Compiled"
@@ -126,7 +132,7 @@ echo "============"
 ############################################
 # If other device make change here
 ############################################
-make exynos9610-m31dd_defconfig O=M31
+make M31_defconfig O=M31
 make -j$(nproc --all) O=M31
 echo ""
 echo "Kernel Compiled"
@@ -160,6 +166,8 @@ rm ./PRISH/AK/*.zip
 rm -rf M31
 rm -rf M21
 rm -rf A51
+rm -rf M30S
+rm -rf A50
 clear
 ############################################
 # If other device make change here
@@ -167,7 +175,7 @@ clear
 echo "===="
 echo "M31"
 echo "===="
-make exynos9610-m31dd_defconfig O=M31
+make M31dd_defconfig O=M31
 make -j$(nproc --all) O=M31
 echo "Kernel Compiled"
 echo ""
@@ -207,6 +215,36 @@ cd PRISH/AK
 . zip.sh
 cd ../..
 cp -r ./PRISH/AK/1*.zip ./output/PrishKernel-ONEUI-R3-Ak-A51.zip
+rm ./PRISH/AK/*.zip
+rm ./PRISH/AK/Image
+echo "====="
+echo "M30S"
+echo "====="
+make M30S_defconfig O=M30S
+make -j$(nproc --all) O=M30S
+echo "Kernel Compiled"
+echo ""
+rm ./PRISH/AK/Image
+cp -r ./M30S/arch/arm64/boot/Image ./PRISH/AK/Image
+cd PRISH/AK
+. zip.sh
+cd ../..
+cp -r ./PRISH/AK/1*.zip ./output/PrishKernel-ONEUI-R3-Ak-M30S.zip
+rm ./PRISH/AK/*.zip
+rm ./PRISH/AK/Image
+echo "==="
+echo "A50"
+echo "==="
+make A50_defconfig O=A50
+make -j$(nproc --all) O=A50
+echo "Kernel Compiled"
+echo ""
+rm ./PRISH/AK/Image
+cp -r ./A50/arch/arm64/boot/Image ./PRISH/AK/Image
+cd PRISH/AK
+. zip.sh
+cd ../..
+cp -r ./PRISH/AK/1*.zip ./output/PrishKernel-ONEUI-R3-Ak-A50.zip
 rm ./PRISH/AK/*.zip
 rm ./PRISH/AK/Image
 echo "==="
@@ -271,6 +309,3 @@ echo "Exiting"
 echo "========"
 exit
 fi
-
-
-
