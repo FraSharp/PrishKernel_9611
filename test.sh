@@ -28,7 +28,6 @@ export CCACHE_COMPRESS=1
 export TOOLCHAIN="aarch64-linux-android-"
 export CLANG_TRIPLE="aarch64-linux-gnu-"
 export CROSS_COMPILE="$(pwd)/gcc/bin/${TOOLCHAIN}"
-export CROSS_COMPILE_ARM32="$(pwd)/gcc32/bin/arm-linux-androideabi-"
 #export WITH_OUTDIR=true
 
 # Export PATH flag
@@ -116,7 +115,7 @@ clear
 echo "==============="
 echo "Building Clean"
 echo "==============="
-make M31_defconfig O=M31
+make M31dd_defconfig O=M31
 make -j$(nproc --all) O=M31
 echo ""
 echo "Kernel Compiled"
@@ -132,7 +131,7 @@ echo "============"
 ############################################
 # If other device make change here
 ############################################
-make M31_defconfig O=M31
+make M31dd_defconfig O=M31
 make -j$(nproc --all) O=M31
 echo ""
 echo "Kernel Compiled"
